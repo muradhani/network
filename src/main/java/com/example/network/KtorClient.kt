@@ -26,9 +26,9 @@ class KtorClient {
             })
         }
     }
-    suspend fun getCharacter(id:Int): Character {
-        return client.get("character/$id").body()
-    }
+//    suspend fun getCharacter(id:Int): CharacterDto {
+//        return client.get("character/$id").body()
+//    }
 }
 
 @Serializable
