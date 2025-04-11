@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    id("kotlinx-serialization")
 }
 
 android {
@@ -41,8 +42,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.serilization)
-    implementation(libs.ktor.client.logging)
     implementation(libs.ktor.client.android)
-    implementation(libs.kotlin.serilization)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.kotlinx.serialization.json.v173)
 }
