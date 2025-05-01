@@ -30,9 +30,9 @@ class KtorClient @Inject constructor() {
     suspend fun getCharacter(id: Int): CharacterDto? {
         val response = client.get("character/$id")
         return if (response.status == HttpStatusCode.OK) {
-            response.body<CharacterDto>() // Convert response body to CharacterDto
+            response.body<CharacterDto>()
         } else {
-            null // Handle error case
+            null
         }
     }
 }
