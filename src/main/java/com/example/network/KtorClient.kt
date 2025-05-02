@@ -1,6 +1,9 @@
 package com.example.network
 
+import android.util.Log
 import com.example.network.dto.CharacterDto
+import com.example.network.dto.EpisodeDto
+import com.example.network.dto.EpisodesDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android
@@ -31,6 +34,14 @@ class KtorClient @Inject constructor() {
         val response = client.get("character/$id")
         return if (response.status == HttpStatusCode.OK) {
             response.body<CharacterDto>()
+        } else {
+            null
+        }
+    }
+    suspend fun getEpisodes(episodeIds:String): List<EpisodeDto>? {
+        val response = client.get("episode/$episodeIds")
+        return if (response.status == HttpStatusCode.OK) {
+            response.body<List<EpisodeDto>>()
         } else {
             null
         }
