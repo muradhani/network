@@ -30,7 +30,7 @@ class KtorClient @Inject constructor() {
             })
         }
     }
-    suspend fun getCharacter(id: Int): CharacterDto? {
+    suspend fun getCharacter(id: Int): CharacterDto? = safeApiCall("getCharacter"){
         val response = client.get("character/$id")
         return if (response.status == HttpStatusCode.OK) {
             response.body<CharacterDto>()
@@ -38,11 +38,21 @@ class KtorClient @Inject constructor() {
             null
         }
     }
-    suspend fun getEpisodes(episodeIds:String): List<EpisodeDto>? {
+    suspend fun getEpisodes(episodeIds:String): List<EpisodeDto>? = safeApiCall("getEpisodes") {
         val response = client.get("episode/$episodeIds")
         return if (response.status == HttpStatusCode.OK) {
             response.body<List<EpisodeDto>>()
         } else {
+            null
+        }
+    }
+
+
+    inline fun <T> safeApiCall(tag:String = "ApiCall",block:() -> T): T?{
+        return try {
+            block()
+        } catch (e : Exception){
+            Log.e(tag,"Network error: ${e.message}")
             null
         }
     }
