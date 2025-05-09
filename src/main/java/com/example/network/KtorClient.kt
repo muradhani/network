@@ -38,6 +38,15 @@ class KtorClient @Inject constructor() {
             null
         }
     }
+
+    suspend fun getEpisode(episodeId: String): EpisodeDto? = safeApiCall("getEpisode"){
+        val response = client.get("episode/$episodeId")
+        return if (response.status == HttpStatusCode.OK){
+            response.body<EpisodeDto>()
+        }
+        else null
+    }
+
     suspend fun getEpisodes(episodeIds:String): List<EpisodeDto>? = safeApiCall("getEpisodes") {
         val response = client.get("episode/$episodeIds")
         return if (response.status == HttpStatusCode.OK) {
