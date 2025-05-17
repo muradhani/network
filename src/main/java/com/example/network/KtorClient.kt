@@ -2,6 +2,7 @@ package com.example.network
 
 import android.util.Log
 import com.example.network.dto.CharacterDto
+import com.example.network.dto.CharacterPageDto
 import com.example.network.dto.EpisodeDto
 import com.example.network.dto.EpisodesDto
 import io.ktor.client.HttpClient
@@ -56,6 +57,11 @@ class KtorClient @Inject constructor() {
         }
     }
 
+    suspend fun getCharactersPage(pageNumber:Int) : CharacterPageDto? = safeApiCall("getCharacterPage"){
+        val response = client.get("character/?page=$pageNumber")
+        return if (response.status == HttpStatusCode.OK ) response.body<CharacterPageDto>()
+        else null
+    }
 
     inline fun <T> safeApiCall(tag:String = "ApiCall",block:() -> T): T?{
         return try {
